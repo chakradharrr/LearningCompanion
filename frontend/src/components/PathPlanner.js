@@ -40,12 +40,12 @@ function PathPlanner() {
                 </button>
 
                 {response && (
-                    <div className="mt-4">
+                    <div className="mt-4 globalcontainer">
                         <h3 className="text-primary">Career Guide</h3>
 
                         <ReactMarkdown>{response.career_guide}</ReactMarkdown>
 
-                        <h4 className="text-success mt-4">YouTube Resources</h4>
+                        <h4 className="text-dark mt-4">YouTube Resources</h4>
                         <ul className="list-group">
                             {response.youtube_links.map((link, index) => (
                                 <li key={index} className="list-group-item">
@@ -54,7 +54,7 @@ function PathPlanner() {
                             ))}
                         </ul>
 
-                        <h4 className="text-info mt-4">Web Resources</h4>
+                        <h4 className="text-dark mt-4">Web Resources</h4>
                         <ul className="list-group">
                             {response.web_links.map((link, index) => (
                                 <li key={index} className="list-group-item">

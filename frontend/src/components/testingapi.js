@@ -170,64 +170,9 @@ const ChatBox = () => {
     
     <h1 className="heading">quick options</h1>
     <div className="box-container">
-      <div className="box">
-        <h3 className="title">likes and comments</h3>
-        <p className="likes">
-          total likes : <span>25</span>
-        </p>
-        <a  className="inline-btn">
-          view likes
-        </a>
-        <p className="likes">
-          total comments : <span>12</span>
-        </p>
-        <a  className="inline-btn">
-          view comments
-        </a>
-        <p className="likes">
-          saved playlists : <span>4</span>
-        </p>
-        <a  className="inline-btn">
-          view playlists
-        </a>
-      </div>
-      <div className="box">
-        <h3 className="title">top categories</h3>
-        <div className="flex">
-          <a >
-            <i className="fas fa-code" />
-            <span>development</span>
-          </a>
-          <a >
-            <i className="fas fa-chart-simple" />
-            <span>business</span>
-          </a>
-          <a >
-            <i className="fas fa-pen" />
-            <span>design</span>
-          </a>
-          <a >
-            <i className="fas fa-chart-line" />
-            <span>marketing</span>
-          </a>
-          <a >
-            <i className="fas fa-music" />
-            <span>music</span>
-          </a>
-          <a >
-            <i className="fas fa-camera" />
-            <span>photography</span>
-          </a>
-          <a >
-            <i className="fas fa-cog" />
-            <span>software</span>
-          </a>
-          <a >
-            <i className="fas fa-vial" />
-            <span>science</span>
-          </a>
-        </div>
-      </div>
+      
+      
+
       <div className="box">
         <h3 className="title">popular topics</h3>
         <div className="flex">
@@ -269,7 +214,7 @@ const ChatBox = () => {
     </div>
   </section>
   <footer className="footer">
-    PS G88-AI Based IT Traning System
+    AI Based Learning System
   </footer>
   {/* custom js file link  */}
 </>

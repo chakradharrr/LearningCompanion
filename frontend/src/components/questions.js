@@ -21,7 +21,7 @@ function QuizApp(props) {
       try {
         console.log(response);
         let obj = response.data;
-        console.log(obj)
+        console.log(obj);
         if (typeof obj === "string") {
           obj = JSON.parse(obj);  // Ensure JSON parsing if backend returns a string
         }
@@ -42,7 +42,6 @@ function QuizApp(props) {
     .catch(error => console.error("Error fetching quiz:", error))
     .finally(() => setIsLoading(false));
   };
-  
 
   const checkAnswer = () => {
     if (selectedOption === '') return;
@@ -115,11 +114,12 @@ function QuizApp(props) {
             <div>
               <h3>Incorrect Answers:</h3>
               {incorrectAnswers.map((answer, index) => (
-                <div key={index}>
-                  <p><strong>Question:</strong> {answer.question}</p>
-                  <p><strong>Your Answer:</strong> {answer.incorrectAnswer}</p>
-                  <p><strong>Correct Answer:</strong> {answer.correctAnswer}</p>
+                <div key={index} className='d-flex flex-column align-items-start mb-3'>
+                  <p className='text-dark'> {answer.question}</p>
+                  <p className='text-danger'>❌ {answer.incorrectAnswer}</p>
+                  <p className='text-success'>✅ {answer.correctAnswer}</p>
                 </div>
+                
               ))}
             </div>
           )}

@@ -12,6 +12,12 @@ from dotenv import load_dotenv
 from flask_cors import CORS
 from youtube_transcript_api import YouTubeTranscriptApi as yta 
 import google.generativeai as genai
+from flask import Flask, request, jsonify
+import urllib.request
+import re
+import sys
+import traceback
+from flask_cors import CORS
 
 import json
 # Load environment variables
@@ -101,8 +107,6 @@ def generate_content(pdf_text, prompt_type, user_question=None):
 
     except requests.exceptions.RequestException as e:
         return {"error": str(e)}
-
-
 # API Endpoint to extract text from PDF
 @app.route('/extract-text', methods=['POST'])
 def extract_text():
@@ -268,13 +272,13 @@ def transcribe():
 
     data=transcribe_util(user_link)
     if len(data)<=40000:
-        to_return=askgem(data+"Explain it in very depth and extra information ")
+        to_return=askgem(data+"Explain it in concise manner ")
         print(to_return +"\n\n\n\n\n\n\n\n\n\n\n\n\n")
     else:   
         prev=0
         to_return = ""
         for i in range(0,len(data),5000):
-            to_return+=askgem(data[prev:i]+"Explain it in very depth and extra information ")
+            to_return+=askgem(data[prev:i]+"Explain it in concise manner ")
             prev=i
     return jsonify({"data": to_return})
 
@@ -407,15 +411,6 @@ def get_video_recommendations():
     
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-
-
-
-
-
-
-
 
  
 

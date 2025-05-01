@@ -13,7 +13,7 @@ function Build() {
   function fetchItems() {
     setLoading(true);
     axios
-      .post("http://localhost:5000/generate-career-guide", {
+      .post("http://127.0.0.1:5000/generate-career-guide", {
         query: prompt,
       })
       .then((response) => {

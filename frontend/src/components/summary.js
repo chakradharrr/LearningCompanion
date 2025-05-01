@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import ReactMarkdown from "react-markdown";  // Import ReactMarkdown
 
 function Summary({ data }) {
     const [summary, setSummary] = useState('');
@@ -9,8 +10,8 @@ function Summary({ data }) {
         setIsLoading(true);
         axios.post("http://127.0.0.1:5000/generate-content", { 
             pdf_text: data,
-      prompt_type: "3"
-         })
+            prompt_type: "3"
+        })
         .then(response => {
             console.log(response.data.generated_text);
             setSummary(response.data.generated_text);
@@ -30,12 +31,9 @@ function Summary({ data }) {
             </button>
 
             {summary && (
-                <textarea 
-                    className="globalsub" 
-                    value={summary} 
-                    placeholder="Summary will appear here..." 
-                    readOnly 
-                />
+                <div className="globalcontainer mt-3">
+                    <ReactMarkdown children={summary} />  {/* Render the markdown */}
+                </div>
             )}
         </div>
     );

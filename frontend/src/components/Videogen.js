@@ -7,7 +7,7 @@ function GenVid({ data }) {
 
   const getVideos = () => {
     axios
-      .post('http://localhost:5000/getvideo', { data })
+      .post('http://127.0.0.1:5000/getvideo', { data })
       .then(response => {
         // Backend already returns an array of full URLs
         const resData = response.data.id || [];
@@ -19,19 +19,13 @@ function GenVid({ data }) {
   };
 
   const VideoItem = ({ url }) => {
-    let videoId;
-    try {
-      videoId = new URL(url).searchParams.get('v');
-    } catch {
-      // If url is malformed, skip rendering
-      return null;
-    }
-
+    const videoId = url; // Directly use the ID
+  
     return (
       <div className="box-container">
         <a
           className="box"
-          href={url}
+          href={`https://www.youtube.com/watch?v=${videoId}`}
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -46,6 +40,7 @@ function GenVid({ data }) {
       </div>
     );
   };
+  
 
   return (
     <section className="playlist-videos">
