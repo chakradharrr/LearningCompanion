@@ -130,9 +130,9 @@ window.onscroll = () =>{
       <img src={require("./images/pic-2.jpg" )} className="image" alt="" />
       <h3 className="name">Sample name </h3>
       <p className="role">student</p>
-      <a  className="btn">
+      {/* <a  className="btn">
         view profile
-      </a>
+      </a> */}
     </div>
     <nav className="navbar">
       <Link to="/home">

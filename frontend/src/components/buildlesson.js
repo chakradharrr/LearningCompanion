@@ -50,7 +50,7 @@ function Build1(){
               
             </div>
             <h3 className="title">Create by topic </h3>
-            <a href="/build" className="inline-btn">
+            <a href="/planner" className="inline-btn">
               Build Lesson 
             </a>
           </div>

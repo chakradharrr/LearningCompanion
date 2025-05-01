@@ -343,9 +343,67 @@ def chat():
     return jsonify({"response": response_text})
 
 
-    
-    
-    
+@app.route("/optimize-code", methods=["POST"])
+def optimize_code():
+    data = request.json
+    code = data.get("code", "")
+    lang = data.get("language", "Python")
+
+    prompt = f"""
+You are a software engineering assistant.
+
+Analyze the following {lang} code and perform **optimization** ONLY if possible.
+
+1. If time or space complexity can be improved, return:
+- The **optimized code**
+- The **new time complexity**
+- The **new space complexity**
+
+2. If the code is already optimal, return:
+"This code is already optimized for time and space complexity."
+
+ONLY provide code and complexity info. Be concise. Do not add extra explanation or tips.
+
+Code:
+{code}
+    """
+
+    optimized_response = askgem(prompt)
+    return jsonify({"optimized_code": optimized_response})
+
+
+
+@app.route("/convert-code", methods=["POST"])
+def convert_code():
+    data = request.json
+    code = data.get("code", "")
+    target_lang = data.get("target_language", "Java")
+
+    prompt = f"""
+Convert the following code to {target_lang}.
+Only return the converted code. Do not include any explanation, comments, or formatting instructions.
+
+Code:
+{code}
+    """
+
+    converted = askgem(prompt)
+    return jsonify({"converted_code": converted})
+
+
+@app.route("/getvideo", methods=["POST"])
+def get_video_recommendations():
+    data = request.json
+    topic = data.get("data", "")
+
+    if not topic:
+        return jsonify({"error": "No topic provided"}), 400
+
+    videos = search_youtube(topic)
+    return jsonify({"id": videos})
+
+
+
     
 if __name__ == '__main__':
     app.run(debug=True)

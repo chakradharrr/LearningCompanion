@@ -1,118 +1,80 @@
-import React ,{useEffect, useState} from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import {Link} from "react-router-dom";
-import "./style.css"
-import Editor from "@monaco-editor/react";
+import "./style.css";
 
-import QuizApp from "./questions";
-import GenVid from "./Videogen";
+function Compiler() {
+  const [code, setCode] = useState("");
+  const [output, setOutput] = useState("");
+  const [sourceLang, setSourceLang] = useState("Python");
+  const [targetLang, setTargetLang] = useState("Java");
 
-function Compiler()
-{  const[apidata, setAPi]=useState({})
-  const[revCode, setRevcode]= useState("");
-  const[terminal,setTer]= useState("");
-  const [code,setCode]= useState("");
-  async function response() {
-    //const data = await axios.get("/compilecode");
-    axios.post('/compilecode',{
-      code:code,
-      input:"",
-      lang:"Python"
+  const handleOptimize = async () => {
+    try {
+      const res = await axios.post("http://localhost:5000/optimize-code", {
+        code,
+        language: sourceLang,
+      });
+      setOutput(res.data.optimized_code);
+    } catch (err) {
+      console.error(err);
+      setOutput("❌ Error optimizing code.");
+    }
+  };
 
-    })
-    .then(function (response) {
-      console.log(response);
-      setCode(response.data.code)
-      setTer(response.data.output)
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-   
-  
-   
-}
+  const handleConvert = async () => {
+    try {
+      const res = await axios.post("http://localhost:5000/convert-code", {
+        code,
+        target_language: targetLang,
+      });
+      setOutput(res.data.converted_code);
+    } catch (err) {
+      console.error(err);
+      setOutput("❌ Error converting code.");
+    }
+  };
 
-function codeupdate(event){
-  setCode(event.target.value)
-  setCode(event.target.value)
-  console.log(code)
-  
-}
-function ai(){
-  axios.post(("compilecodeai"),{
-    code:code
-  })
-  .then(function(response){
-    setRevcode(response.data.anaylsis)
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-}
-
-function Display() {
   return (
-   <section class="watch-video">
-        <div class="video-container">
-<h1 class="heading">Study guide </h1>
+    <div className="code-assistant-container">
+      <h2>🧠 Code Assistant</h2>
 
-<form action="" class="add-commentt">
-</form>
-     </div>
-     
+      <label><strong>Source Language:</strong></label>
+      <select value={sourceLang} onChange={(e) => setSourceLang(e.target.value)}>
+        <option value="Python">Python</option>
+        <option value="Java">Java</option>
+        <option value="JavaScript">JavaScript</option>
+        <option value="C">C</option>
+        <option value="C++">C++</option>
+      </select>
 
-    
-   <div class="video-container">
-  
-     
-   </div>
-   <div>
-   <GenVid data={code}/>
-   <QuizApp data={code}/>
-   </div>
- </section >
+      <br /><br />
+      <textarea
+        rows="12"
+        cols="100"
+        placeholder="Paste your code here..."
+        value={code}
+        onChange={(e) => setCode(e.target.value)}
+      />
+
+      <br />
+      <button className="inline-btn" onClick={handleOptimize}>Optimize Code</button>
+
+      <label><strong>Convert to:</strong></label>
+      <select value={targetLang} onChange={(e) => setTargetLang(e.target.value)}>
+        <option value="Python">Python</option>
+        <option value="Java">Java</option>
+        <option value="JavaScript">JavaScript</option>
+        <option value="C">C</option>
+        <option value="C++">C++</option>
+      </select>
+
+      <button className="inline-btn" onClick={handleConvert}>Convert Code</button>
+
+      <br /><br />
+      <h3>🧾 Output</h3>
+      <textarea rows="12" cols="100" value={output} readOnly />
+    </div>
   );
 }
 
-return(
-  <section class ="watch-video">
-    <div class="video-container">
-       
-        <h3 class ="heading">Code</h3>
-        <textarea rows="13" cols="100" id="code" name="code" class ="globalsub2" onChange={codeupdate}>type here </textarea>
-        <br />
-        <br></br>
-        <h3 class ="heading">Terminal</h3>
-        <br></br>
-        <br></br>
-        <button type="button" class="inline-btn" onClick={response}>compile</button>
-        <textarea class="globalsub3"rows="10" cols="100" id="input" name="input" value={terminal}></textarea>
-        <br />
-        Language:<select name="lang">
-            
-            <option value="Python">Python</option>
-        </select>
-        Compile with Input:
-        <input type="radio" name="inputRadio" value="true" />yes
-        <input type="radio" name="inputRadio" id="inputRadio" value="false" />No
-        <br />
-        
-        <br></br>
-        <br></br>
-        <h3 class ="heading">AI analysis</h3>
-        <button class="inline-btn" type="button" onClick={ai}>Ask AI</button>
-        <br></br>
-        <br></br>
-        <textarea
-                class="globalsub4"
-                value={revCode}
-                placeholder="Ai analysis "
-                readOnly
-            />
-     
-    </div>
-    </section>
-)
-}
 export default Compiler;
